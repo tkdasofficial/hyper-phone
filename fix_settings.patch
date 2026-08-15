@@ -1,0 +1,19 @@
+--- app/src/main/java/com/hyper/phone/android/ui/screens/SettingsScreen.kt
++++ app/src/main/java/com/hyper/phone/android/ui/screens/SettingsScreen.kt
+@@ -432,6 +432,7 @@
+     val scope = rememberCoroutineScope()
+     val blockNonContacts by viewModel.settingsManager.blockNonContactsFlow.collectAsState(initial = false)
+     val blockPrivate by viewModel.settingsManager.blockPrivateFlow.collectAsState(initial = false)
++    val minimizeIncoming by viewModel.settingsManager.minimizeIncomingFlow.collectAsState(initial = false)
+     val spamList by viewModel.spamList.collectAsState()
+     var showAddDialog by remember { mutableStateOf(false) }
+     var inputNumber by remember { mutableStateOf("") }
+@@ -450,6 +451,8 @@
+                 HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
+                 SettingsSwitch("Block Private Numbers", "Automatically reject hidden callers", blockPrivate) { scope.launch { viewModel.settingsManager.saveBlockPrivate(it) } }
+                 HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
++                SettingsSwitch("Minimize Incoming Calls", "Show heads-up notification instead of full screen", minimizeIncoming) { scope.launch { viewModel.settingsManager.saveMinimizeIncoming(it) } }
++                HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
+                 ListItem(
+                     headlineContent = { Text("Spam Database") },
+                     supportingContent = { Text("${spamList.size} entries") },
